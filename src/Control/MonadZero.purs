@@ -18,6 +18,7 @@ import Control.Apply (class Apply, apply, (*>), (<*), (<*>))
 import Control.Bind (class Bind, bind, ifM, join, (<=<), (=<<), (>=>), (>>=))
 import Control.Monad (class Monad, ap, liftM1)
 import Control.Plus (class Plus, empty)
+import Prim.TypeError (class Warn, Text)
 
 import Data.Functor (class Functor, map, void, ($>), (<#>), (<$), (<$>))
 import Data.Unit (Unit, unit)
@@ -51,6 +52,6 @@ instance monadZeroArray :: MonadZero Array
 -- |   guard $ a * b == n
 -- |   pure a
 -- | ```
-guard :: forall m. MonadZero m => Boolean -> m Unit
+guard :: forall m. Warn (Text "`MonadZero` is deprecated. Use `Control.Alternative` instead") => MonadZero m => Boolean -> m Unit
 guard true = pure unit
 guard false = empty
