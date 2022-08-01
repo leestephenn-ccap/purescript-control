@@ -1,5 +1,6 @@
 module Control.Alternative
   ( class Alternative
+  , guard
   , module Control.Alt
   , module Control.Applicative
   , module Control.Apply
@@ -11,6 +12,7 @@ import Control.Alt (class Alt, alt, (<|>))
 import Control.Applicative (class Applicative, pure, liftA1, unless, when)
 import Control.Apply (class Apply, apply, (*>), (<*), (<*>))
 import Control.Plus (class Plus, empty)
+import Data.Unit (Unit, unit)
 
 import Data.Functor (class Functor, map, void, ($>), (<#>), (<$), (<$>))
 
@@ -25,3 +27,7 @@ import Data.Functor (class Functor, map, void, ($>), (<#>), (<$), (<$>))
 class (Applicative f, Plus f) <= Alternative f
 
 instance alternativeArray :: Alternative Array
+
+guard :: forall m. Alternative m => Boolean -> m Unit
+guard true = pure unit
+guard false = empty
